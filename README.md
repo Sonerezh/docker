@@ -2,7 +2,7 @@
 
 This is the Git repository of the official Docker image for [Sonerezh](https://www.sonerezh.bzh). See the Hub page for more informations.
 
-**WARNING**: the Docker image for Sonerezh is absolutely not stable. Your Sonerezh data (preferences, users, thumbnails) will be lost if you delete your container. Sonerezh is not *Docker compliant* for the moment. Some functionnality are broken too: email notifications for example.
+**WARNING**: the Docker image for Sonerezh is still under development. Some functionnality are broken like email notifications for example.
 
 # How to build this image
 
@@ -20,19 +20,20 @@ $ docker build --tag sonerezh .
 You can configure your Sonerezh instance manually. First you will need to run `mysql` or `mariadb` container:
 
 ```sh
-$ docker run --name sonerezh-mariadb --env MYSQL_ROOT_PASSWORD=changeme \
-									 --env MYSQL_USER=sonerezh \
-									 --env MYSQL_PASSWORD=changemetoo \
-									 --env MYSQL_DATABASE=sonerezh \
-									 --volume /path/to/mysql/data:/var/lib/mysql \
-									 --detach mariadb
+$ docker run --name sonerezh-db --env MYSQL_ROOT_PASSWORD=changeme \
+								--env MYSQL_USER=sonerezh \
+								--env MYSQL_PASSWORD=changemetoo \
+								--env MYSQL_DATABASE=sonerezh \
+								--volume /path/to/mysql/data:/var/lib/mysql \
+								--detach mariadb
 ```
 
 And then run Sonerezh container:
 
 ```sh
-$ docker run --name sonerezh-app --link sonerezh-mariadb:mariadb \
+$ docker run --name sonerezh-app --link sonerezh-db:sonerezh-db \
 								 --volume /path/to/music:/music \
+								 --volume /path/to/thumbnails:/thumbnails \
 								 --detach --publish 8080:80 \
 								 sonerezh/sonerezh:latest
 ```
