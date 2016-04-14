@@ -35,7 +35,7 @@ $ docker run --name sonerezh-app --link sonerezh-db:sonerezh-db \
 								 --volume /path/to/music:/music \
 								 --volume /path/to/thumbnails:/thumbnails \
 								 --detach --publish 8080:80 \
-								 sonerezh/sonerezh:dev
+								 sonerezh/sonerezh:latest
 ```
 
 Your Sonerezh instance is available at http://127.0.0.1:8080 :) Make sure Sonerezh have read access to `/path/to/music` and read/write access to `/path/to/thumbnails`.
